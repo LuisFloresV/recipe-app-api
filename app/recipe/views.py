@@ -32,6 +32,8 @@ class IngredientViewSet(BaseRecipeAttrViewSet):
     queryset = Ingredient.objects.all()
     serializer_class = serializers.IngredientSerializer
 
+
+#MODEL VIEW SET(CRUD)
 class RecipeViewSet(viewsets.ModelViewSet):
     """Manage ingredients in the database"""
     queryset = Recipe.objects.all()
@@ -49,3 +51,7 @@ class RecipeViewSet(viewsets.ModelViewSet):
             return serializers.RecipeDetailSerializer
 
         return self.serializer_class
+
+    def perform_create(self, serializer):
+        """Create a new recipe"""
+        serializer.save(user=self.request.user)
